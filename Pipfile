@@ -9,6 +9,9 @@ djangorestframework = "*"
 djangorestframework-xml = "*"
 djoser = "*"
 django-filter = "*"
+drf-spectacular = "*"
+djangorestframework-simplejwt = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 

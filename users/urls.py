@@ -1,8 +1,13 @@
 # users/urls.py
-from django.urls import path
+from django.urls import include, path
 from .views import UserCreateView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 urlpatterns = [
-    path('register/', UserCreateView.as_view(), name='user-register'),
+
+    path('', include('djoser.urls')),  # Incluir as URLs do Djoser
+    path('', include('djoser.urls.jwt')),  # Para autenticação baseada em token, se necessário
+    path('', include('djoser.urls.authtoken')),  # Para autenticação baseada em token, se necessário
+    
 ]

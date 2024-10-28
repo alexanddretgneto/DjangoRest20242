@@ -1,9 +1,9 @@
 # users/serializers.py
+from djoser.serializers import UserCreateSerializer as DjoserUserCreateSerializer
 from rest_framework import serializers
 from .models import CustomUser
 
-class UserCreateSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+class UserCreateSerializer(DjoserUserCreateSerializer):
     password2 = serializers.CharField(write_only=True, label='Confirmação de Senha')
 
     class Meta:
@@ -15,13 +15,23 @@ class UserCreateSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
+        # Verifica se as senhas coincidem
+        password = attrs.get('password')
+        password2 = attrs.get('password2')
+        
+        if password != password2:
             raise serializers.ValidationError({"password": "As senhas não coincidem."})
+        
+        # Adicione validação para o email se necessário
+        if CustomUser.objects.filter(email=attrs.get('email')).exists():
+            raise serializers.ValidationError({"email": "Este email já está em uso."})
+        
         return attrs
 
     def create(self, validated_data):
         validated_data.pop('password2')  # Remover a confirmação de senha
-        user = CustomUser(**validated_data)
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
+        user = CustomUser(**validated_data)  # Criar a instância do usuário
+        user.set_password(validated_data['password'])  # Definir a senha
+        user.save()  # Salvar o usuário
+        return user  # Retornar a instância do usuário
+

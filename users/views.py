@@ -4,3 +4,4 @@ from .serializers import UserCreateSerializer
 
 class UserCreateView(generics.CreateAPIView):
     serializer_class = UserCreateSerializer
+
