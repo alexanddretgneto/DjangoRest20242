@@ -2,6 +2,7 @@
 from djoser.serializers import UserCreateSerializer as DjoserUserCreateSerializer
 from rest_framework import serializers
 from .models import CustomUser
+from djoser.serializers import UserSerializer as DjoserUserSerializer
 
 class UserCreateSerializer(DjoserUserCreateSerializer):
     password2 = serializers.CharField(write_only=True, label='Confirmação de Senha')
@@ -34,4 +35,12 @@ class UserCreateSerializer(DjoserUserCreateSerializer):
         user.set_password(validated_data['password'])  # Definir a senha
         user.save()  # Salvar o usuário
         return user  # Retornar a instância do usuário
+
+
+
+
+class UserUpdateSerializer(DjoserUserSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email'] 
 

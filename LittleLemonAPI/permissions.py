@@ -1,22 +1,18 @@
-# # LittleLemonAPI/permissions.py
-# from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission
 
-# class IsManager(BasePermission):
-#     def has_permission(self, request, view):
-#         # Defina a lógica de permissão para um gerente
-#         return True
+class IsManager(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Manager').exists()
 
-# class IsDeliveryCrew(BasePermission):
-#     def has_permission(self, request, view):
-#         # Defina a lógica de permissão para a equipe de entrega
-#         return True
+class IsDeliveryCrew(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='DeliveryCrew').exists()
 
-# class IsCustomer(BasePermission):
-#     def has_permission(self, request, view):
-#         # Defina a lógica de permissão para um cliente
-#         return True
+class IsCustomer(BasePermission):
+    def has_permission(self, request, view):
+        # Lógica de permissão para um cliente
+        return request.user.is_authenticated
 
-# class ReadOnly(BasePermission):
-#     def has_permission(self, request, view):
-#         # Permitir apenas acesso de leitura
-#         return request.method in ['GET']
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in ['GET']
