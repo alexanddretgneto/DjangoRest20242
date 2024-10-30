@@ -1,10 +1,23 @@
+cd DjangoRest20242
+
+pipenv shell
+
+pipenv install 
+
+python manage.py makemigrations 
+
+python manage.py migrate
+
+python manage.py runserver
+
 Use swagger para ver todas as API com esgte endpoint: api/schema/swagger-ui
 
+Usuario 1
 Grupo ; Manager
 Username: alex
 Password: a
 
-
+Usuario 2
 Grupo ; DeliveryCrew
 Username:xande
 Password:alexBrasil@2022
