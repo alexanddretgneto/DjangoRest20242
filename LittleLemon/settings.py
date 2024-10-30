@@ -129,7 +129,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
+REST_FRAMEWORK = {    
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',     # Para usuários autenticados
+        'rest_framework.throttling.AnonRateThrottle',     # Para usuários não autenticados
+    ],    
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '100/day',       # Exemplo: limita usuários autenticados a 100 requisições por dia
+        'anon': '10/hour',       # Exemplo: limita usuários anônimos a 10 requisições por hora
+    },
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelsPermissions',
         'rest_framework.authentication.TokenAuthentication',
@@ -139,14 +147,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
-    ],
-    
+    ],    
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated',
-#     ],
-
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 4
  }

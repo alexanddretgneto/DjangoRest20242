@@ -1,0 +1,12 @@
+Use swagger para ver todas as API com esgte endpoint: api/schema/swagger-ui
+
+Grupo ; Manager
+Username: alex
+Password: a
+
+
+Grupo ; DeliveryCrew
+Username:xande
+Password:alexBrasil@2022
+
+git: https://github.com/alexanddretgneto/DjangoRest20242
